@@ -24,16 +24,29 @@ export default class BooksApp extends Component{
 
     }
 
-    updateBooks = (bookShelf,bookId)=>{
-        let firstShelf = this.state.books.filter((book)=>(book.id ===bookId))
-        firstShelf[0].shelf =bookShelf;
-        this.setState((state)=>({
-            books:state.books.filter((book)=>(book.id !== bookId)).concat(firstShelf)
-        }))
+    updateBooks = (book,shelf) => {
 
-        console.log(this.state.books)
-
+        console.log(book,shelf)
+        if (this.state.books) {
+            BooksAPI.update(book,shelf).then(() => {
+                book.shelf = shelf;
+                this.setState(state => ({
+                    books: state.books.filter(b => b.id !== book.id).concat([ book ])
+                }))
+            })
+        }
     };
+
+    // updateBooks = (book,shelf)=>{
+    //     // let firstShelf = this.state.books.filter((book)=>(book.id ===book))
+    //     // firstShelf[0].shelf =shelf;
+    //     // this.setState((state)=>({
+    //     //     books:state.books.filter((book)=>(book.id !== book)).concat(firstShelf)
+    //     // }))
+    //
+    //     console.log('app',book,shelf)
+    //
+    // };
 
     render() {
         return (
