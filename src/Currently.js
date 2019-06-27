@@ -2,29 +2,17 @@ import React,{Component} from 'react'
 
 export default class Currently extends Component{
     state = {
-        value:'',
-        currentlyList:''
+        value:'currentlyReading',
     };
     handleChange = (event,bookId,title)=>{
-        this.setState(({
-            value:event.target.value,
-            }))
         this.props.updateBooks(event.target.value,bookId)
 
     };
 
     render() {
-        let updateBooks;
-        if(this.state.currentlyList){
-            updateBooks = this.state.currentlyList
-
-        }else {
-            updateBooks = this.props.booksList
-        }
-        {console.log(this.state.currentlyList)}
         return (
             <ol className='books-grid'>
-                {updateBooks.map((book)=>(
+                {this.props.booksList.map((book)=>(
                     <li key={book.id}>
                         <div className='book'>
                             <div className='book-top'>

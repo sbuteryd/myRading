@@ -5,9 +5,6 @@ export default class Want extends Component{
         value:'wantToRead'
     };
     handleChange = (event,bookId,title)=>{
-        this.setState(({
-            value:event.target.value,
-        }))
         this.props.updateBooks(event.target.value,bookId)
 
     };
