@@ -4,6 +4,7 @@ import Read from './Read'
 import Currently from './Currently'
 import Want from './Want'
 import Serarch from './Serarch'
+import {Route,Link} from 'react-router-dom'
 
 import './App.css'
 
@@ -57,9 +58,11 @@ export default class BooksApp extends Component{
                         <div className='bookshelf'>
                             <h2 className="bookshelf-title">Currently Reading</h2>
                             <div className="bookshelf-books">
-                                <Currently
-                                    updateBooks={this.updateBooks}
-                                    booksList={this.state.books.filter((c)=> c.shelf ==="currentlyReading")}/>
+                                <Route exact path='/' render={()=>(
+                                    <Currently
+                                        updateBooks={this.updateBooks}
+                                        booksList={this.state.books.filter((c)=> c.shelf ==="currentlyReading")}/>
+                                )}/>
                             </div>
                         </div>
 
@@ -81,8 +84,15 @@ export default class BooksApp extends Component{
                             </div>
                         </div>
                     </div>
+                    <div>
+                        <Route exact path='/search'  render={()=>(
+                            <Serarch/>
+                        )}/>
+                    </div>
                     <div className="open-search">
-                        <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+                        <Link to='/search'>
+                            <button></button>
+                        </Link>
                     </div>
                 </div>
             </div>
