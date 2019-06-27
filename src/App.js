@@ -25,8 +25,7 @@ export default class BooksApp extends Component{
     }
 
     updateBooks = (book,shelf) => {
-
-        console.log(book,shelf)
+        console.log('filter',book,shelf)
         if (this.state.books) {
             BooksAPI.update(book,shelf).then(() => {
                 book.shelf = shelf;
