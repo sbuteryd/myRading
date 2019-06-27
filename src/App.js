@@ -30,7 +30,7 @@ export default class BooksApp extends Component{
                     </div>
                     <div className='list-books-content'>
                         <div className='bookshelf'>
-                            <h2 className="bookshelf-title">Currently</h2>
+                            <h2 className="bookshelf-title">Currently Reading</h2>
                             <div className="bookshelf-books">
                                 <Currently
                                     booksList={this.state.books.filter((c)=> c.shelf ==="currentlyReading")}/>
@@ -38,7 +38,7 @@ export default class BooksApp extends Component{
                         </div>
 
                         <div className='bookshelf'>
-                            <h2 className="bookshelf-title">Want</h2>
+                            <h2 className="bookshelf-title">Want to Read</h2>
                             <div className="bookshelf-books">
                                 <Want
                                     booksList={this.state.books.filter((c)=> c.shelf ==="wantToRead")}/>
