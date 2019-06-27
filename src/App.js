@@ -50,51 +50,57 @@ export default class BooksApp extends Component{
     render() {
         return (
             <div className='app'>
-                <div className='list-books'>
-                    <div className='list-books-title'>
-                        <h1>MyReads</h1>
-                    </div>
-                    <div className='list-books-content'>
-                        <div className='bookshelf'>
-                            <h2 className="bookshelf-title">Currently Reading</h2>
-                            <div className="bookshelf-books">
-                                <Route exact path='/' render={()=>(
-                                    <Currently
+                <Route exact path='/' render={()=>(
+                    <div className='list-books'>
+                        <div className='list-books-title'>
+                            <h1>MyReads</h1>
+                        </div>
+                        <div className='list-books-content'>
+                            <div className='bookshelf'>
+                                <h2 className="bookshelf-title">Currently Reading</h2>
+                                <div className="bookshelf-books">
+                                    <Route exact path='/' render={()=>(
+                                        <Currently
+                                            updateBooks={this.updateBooks}
+                                            booksList={this.state.books.filter((c)=> c.shelf ==="currentlyReading")}/>
+                                    )}/>
+                                </div>
+                            </div>
+
+                            <div className='bookshelf'>
+                                <h2 className="bookshelf-title">Want to Read</h2>
+                                <div className="bookshelf-books">
+                                    <Want
                                         updateBooks={this.updateBooks}
-                                        booksList={this.state.books.filter((c)=> c.shelf ==="currentlyReading")}/>
-                                )}/>
+                                        booksList={this.state.books.filter((c)=> c.shelf ==="wantToRead")}/>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className='bookshelf'>
-                            <h2 className="bookshelf-title">Want to Read</h2>
-                            <div className="bookshelf-books">
-                                <Want
-                                    updateBooks={this.updateBooks}
-                                    booksList={this.state.books.filter((c)=> c.shelf ==="wantToRead")}/>
+                            <div className='bookshelf'>
+                                <h2 className="bookshelf-title">Read</h2>
+                                <div className="bookshelf-books">
+                                    <Read
+                                        updateBooks={this.updateBooks}
+                                        booksList={this.state.books.filter((c)=> c.shelf ==="read")}/>
+                                </div>
                             </div>
                         </div>
+                        <div>
+                            <Route exact path='/search'  render={()=>(
+                                <Serarch/>
+                            )}/>
+                        </div>
+                        <div className="open-search">
+                            <Link to='/search'>
+                                <button>add</button>
+                            </Link>
+                        </div>
+                    </div>
+                )} />
+                <Route path='/search'  render={()=>(
+                    <Serarch/>
+                )}/>
 
-                        <div className='bookshelf'>
-                            <h2 className="bookshelf-title">Read</h2>
-                            <div className="bookshelf-books">
-                                <Read
-                                    updateBooks={this.updateBooks}
-                                    booksList={this.state.books.filter((c)=> c.shelf ==="read")}/>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <Route exact path='/search'  render={()=>(
-                            <Serarch/>
-                        )}/>
-                    </div>
-                    <div className="open-search">
-                        <Link to='/search'>
-                            <button></button>
-                        </Link>
-                    </div>
-                </div>
             </div>
 
         );
