@@ -1,8 +1,8 @@
 import React,{Component} from 'react'
 
-export default class Read extends Component{
+export default class Currently extends Component{
     state = {
-        value:'read'
+        value:'currentlyReading'
     };
     handleChange(event) {
         console.log(event.target.value)
@@ -10,7 +10,7 @@ export default class Read extends Component{
 
     render() {
         return (
-           <ol className='books-grid'>
+            <ol className='books-grid'>
                 {this.props.booksList.map((book)=>(
                     <li key={book.id}>
                         <div className='book'>
