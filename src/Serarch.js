@@ -8,21 +8,34 @@ export default class Serarch extends Component{
         query:'',
         books:[]
     };
-    updateSearch =(values)=>{
-       this.setState(({
-          query:values
-       }));
-       if(this.state.query){
-           BooksAPI.search(this.state.query).then((books)=>{
-              this.setState(({
-                  books
-              }))
-           })
-       }
+    updateQuery = (query) => {
+        if (!query) {
+            this.setState({query: '', books: []})
+        } else {
+            this.setState({ query: query.trim()});
+            BooksAPI.search(query).then((books) => {
+                if (books.error) {
+                    books = []
+                }
+                books.map(book => (this.props.shelfBook.filter((b) => b.id === book.id).map(b => book.shelf = b.shelf)))
+                this.setState({books})
+            })
+        }
     };
 
     render() {
-            console.log(this.state.books)
+        // console.log('this.props.shelfbook',this.props.shelfBook)
+
+        const  second =this.state.books;
+        // console.log(second,'second');
+        const first = this.props.shelfBook;
+        // console.log(first);
+        let save = first.filter((c)=> second.filter((second)=>(
+            c.id ==='PKpPCwAAQBAJ'
+        )
+        ));
+        console.log('save',save);
+
 
         return (
             <div className="search-books">
@@ -31,7 +44,7 @@ export default class Serarch extends Component{
                         <button className="close-search">Close</button>
                     </Link>
                     <div className="search-books-input-wrapper">
-                        <input type="text" value={this.state.query} onChange={(event)=> this.updateSearch(event.target.value)} placeholder="Search by title or author"/>
+                        <input type="text" value={this.state.query} onChange={(event)=> this.updateQuery(event.target.value)} placeholder="Search by title or author"/>
                     </div>
                 </div>
 
@@ -45,8 +58,8 @@ export default class Serarch extends Component{
                                         <div className='book-top'>
                                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:`url(${book.imageLinks.smallThumbnail})`}}></div>
                                             <div className='book-shelf-changer'>
-                                                <select>
-                                                    <option value="move" disabled>Move to...</option>
+                                                <select value={book.shelf} onChange={(event)=>this.handleChange(book,event)}>
+                                                    <option value="move" >Move to...</option>
                                                     <option value="currentlyReading">Currently Reading</option>
                                                     <option value="wantToRead">Want to Read</option>
                                                     <option value="read">Read</option>

@@ -99,7 +99,7 @@ export default class BooksApp extends Component{
                     </div>
                 )} />
                 <Route path='/search'  render={()=>(
-                    <Serarch/>
+                    <Serarch shelfBook={this.state.books}/>
                 )}/>
 
             </div>

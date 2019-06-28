@@ -8,7 +8,6 @@ export default class Currently extends Component{
     };
 
     render() {
-        {console.log(this.props.booksList)}
         return (
             <ol className='books-grid'>
                 {this.props.booksList.map((book)=>(
