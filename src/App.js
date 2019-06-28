@@ -29,7 +29,7 @@ export default class BooksApp extends Component{
         {console.log(book)}
         if (this.state.books) {
             BooksAPI.update(book,shelf).then(() => {
-                book.shelf = shelf;
+                book['shelf'] = shelf;
                 this.setState(state => ({
                     books: state.books.filter(b => b.id !== book.id).concat([ book ])
                 }))
@@ -60,18 +60,16 @@ export default class BooksApp extends Component{
                             <div className='bookshelf'>
                                 <h2 className="bookshelf-title">Currently Reading</h2>
                                 <div className="bookshelf-books">
-                                    <Route exact path='/' render={()=>(
                                         <Currently
                                             updateBooks={this.updateBooks}
                                             booksList={this.state.books.filter((c)=> c.shelf ==="currentlyReading")}/>
-                                    )}/>
                                 </div>
                             </div>
 
                             <div className='bookshelf'>
                                 <h2 className="bookshelf-title">Want to Read</h2>
                                 <div className="bookshelf-books">
-                                    <Want
+                                    <Currently
                                         updateBooks={this.updateBooks}
                                         booksList={this.state.books.filter((c)=> c.shelf ==="wantToRead")}/>
                                 </div>
@@ -80,7 +78,7 @@ export default class BooksApp extends Component{
                             <div className='bookshelf'>
                                 <h2 className="bookshelf-title">Read</h2>
                                 <div className="bookshelf-books">
-                                    <Read
+                                    <Currently
                                         updateBooks={this.updateBooks}
                                         booksList={this.state.books.filter((c)=> c.shelf ==="read")}/>
                                 </div>
@@ -88,7 +86,9 @@ export default class BooksApp extends Component{
                         </div>
                         <div>
                             <Route exact path='/search'  render={()=>(
-                                <Serarch/>
+                                <Serarch
+                                    updateBooks={this.updateBooks}
+                                />
                             )}/>
                         </div>
                         <div className="open-search">
