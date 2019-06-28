@@ -22,6 +22,12 @@ export default class Serarch extends Component{
             })
         }
     };
+    handleChange = (book,event)=>{
+        const save = event.target.options[event.target.selectedIndex].value
+        this.props.updateBooks(book,save)
+
+    };
+
 
     render() {
         // console.log('this.props.shelfbook',this.props.shelfBook)

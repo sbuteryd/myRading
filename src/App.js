@@ -84,13 +84,6 @@ export default class BooksApp extends Component{
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <Route exact path='/search'  render={()=>(
-                                <Serarch
-                                    updateBooks={this.updateBooks}
-                                />
-                            )}/>
-                        </div>
                         <div className="open-search">
                             <Link to='/search'>
                                 <button>add</button>
@@ -99,7 +92,7 @@ export default class BooksApp extends Component{
                     </div>
                 )} />
                 <Route path='/search'  render={()=>(
-                    <Serarch shelfBook={this.state.books}/>
+                    <Serarch updateBooks={this.updateBooks} shelfBook={this.state.books}/>
                 )}/>
 
             </div>
