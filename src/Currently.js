@@ -6,7 +6,6 @@ export default class Currently extends Component{
         this.props.updateBooks(book,save)
 
     };
-
     render() {
         return (
             <ol className='books-grid'>
