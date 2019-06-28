@@ -2,7 +2,7 @@ import React,{Component}from 'react'
 import {Link} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-// import {update} from "./BooksAPI";
+import Currently from './Currently'
 export default class Serarch extends Component{
     state = {
         query:'',
@@ -58,26 +58,9 @@ export default class Serarch extends Component{
                     <ol className='books-grid'>
                          {/*设置长度大于1 防止报错*/}
                     {this.state.books.length ? (
-                        this.state.books.map((book)=>(
-                                <li key={book.id}>
-                                    <div className='book'>
-                                        <div className='book-top'>
-                                            <div className="book-cover" style={{width: 128, height: 192,backgroundImage:`url(${book.imageLinks !==undefined ? book.imageLinks.thumbnail :' '})`}}></div>
-                                            <div className='book-shelf-changer'>
-                                                <select value={book.shelf} onChange={(event)=>this.handleChange(book,event)}>
-                                                    <option value="move" >Move to...</option>
-                                                    <option value="currentlyReading">Currently Reading</option>
-                                                    <option value="wantToRead">Want to Read</option>
-                                                    <option value="read">Read</option>
-                                                    <option value="none">None</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className='book-title'>{book.title}</div>
-                                        <div className='book-authors'>{book.authors}</div>
-                                    </div>
-                                </li>
-                        ))
+                        <Currently
+                            updateBooks={this.updateBooks}
+                            booksList={this.state.books}/>
                     ):(<div className='nothing'>Can't find</div>)}
                     </ol>
                 </div>
