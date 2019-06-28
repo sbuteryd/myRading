@@ -57,7 +57,7 @@ export default class Serarch extends Component{
                 <div className="search-books-results">
                     <ol className='books-grid'>
                          {/*设置长度大于1 防止报错*/}
-                    {this.state.books.length >1 &&(
+                    {this.state.books.length ? (
                         this.state.books.map((book)=>(
                                 <li key={book.id}>
                                     <div className='book'>
@@ -78,9 +78,8 @@ export default class Serarch extends Component{
                                     </div>
                                 </li>
                         ))
-                    )}
+                    ):(<div className='nothing'>Can't find</div>)}
                     </ol>
-
                 </div>
             </div>
         );
