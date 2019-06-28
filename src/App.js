@@ -49,6 +49,7 @@ export default class BooksApp extends Component{
     // };
 
     render() {
+        {console.log(this.state.books)}
         return (
             <div className='app'>
                 <Route exact path='/' render={()=>(
