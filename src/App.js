@@ -24,7 +24,6 @@ export default class BooksApp extends Component{
         })
 
     }
-
     updateBooks = (book,shelf) => {
         {console.log(book)}
         if (this.state.books) {
@@ -36,18 +35,6 @@ export default class BooksApp extends Component{
             })
         }
     };
-
-    // updateBooks = (book,shelf)=>{
-    //     // let firstShelf = this.state.books.filter((book)=>(book.id ===book))
-    //     // firstShelf[0].shelf =shelf;
-    //     // this.setState((state)=>({
-    //     //     books:state.books.filter((book)=>(book.id !== book)).concat(firstShelf)
-    //     // }))
-    //
-    //     console.log('app',book,shelf)
-    //
-    // };
-
     render() {
         {console.log(this.state.books)}
         return (

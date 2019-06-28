@@ -27,22 +27,7 @@ export default class Serarch extends Component{
         this.props.updateBooks(book,save)
 
     };
-
-
     render() {
-        // console.log('this.props.shelfbook',this.props.shelfBook)
-
-        const  second =this.state.books;
-        // console.log(second,'second');
-        const first = this.props.shelfBook;
-        // console.log(first);
-        let save = first.filter((c)=> second.filter((second)=>(
-            c.id ==='PKpPCwAAQBAJ'
-        )
-        ));
-        console.log('save',save);
-
-
         return (
             <div className="search-books">
                 <div className="search-books-bar">
