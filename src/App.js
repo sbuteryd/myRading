@@ -1,8 +1,6 @@
 import React,{Component} from 'react'
 import * as BooksAPI from './BooksAPI'
-// import Read from './Read'
 import Currently from './Currently'
-// import Want from './Want'
 import Serarch from './Serarch'
 import {Route,Link} from 'react-router-dom'
 
