@@ -18,9 +18,12 @@ class Search extends Component{
 
 
 class ListContact extends Component{
+    changeShelf =(book,shelfValue)=>{
+        this.props.updateShelf(book,shelfValue)
+    };
+
     render() {
         const {books,title}= this.props
-        console.log(books)
         return (
             <div className="bookshelf">
                 <h2 className="bookshelf-title">{title}</h2>
@@ -32,7 +35,7 @@ class ListContact extends Component{
                                     <div className="book-top">
                                         <div className="book-cover" style={{ width: 128, height: 193,backgroundImage:`url(${book.imageLinks.smallThumbnail ? book.imageLinks.smallThumbnail:'' })`}}></div>
                                         <div className="book-shelf-changer">
-                                            <select value={book.shelf}>
+                                            <select value={book.shelf} onChange={(event)=> this.changeShelf(book,event.target.value)}>
                                                 <option value="move" disabled>Move to...</option>
                                                 <option value="currentlyReading">Currently Reading</option>
                                                 <option value="wantToRead">Want to Read</option>
@@ -78,14 +81,51 @@ class BooksApp extends Component{
             }))
         })
     }
+    updateShelf = (book,shelf)=>{
+        if(this.state.books){
+            BooksAPI.update(book,shelf).then(()=>{
+                book['shelf'] = shelf;
+                this.setState((state)=>({
+                    books:state.books.filter((b)=>b.id !==book.id).concat(book)//book 是id， b
+                }))
+            })
+        }
+
+
+    }
+
+
+    // updateBooks = (book,shelf) => {
+    //     {console.log(book)}
+    //     if (this.state.books) {
+    //         BooksAPI.update(book,shelf).then(() => {
+    //             book['shelf'] = shelf;
+    //             this.setState(state => ({
+    //                 books: state.books.filter(b => b.id !== book.id).concat([ book ])
+    //             }))
+    //         })
+    //     }
+    // };
+
     render() {
-        console.log(this.state.books)
         return (
             <div className="list-books">
                 <Header/>
-                <ListContact books={this.state.books.filter((b)=>b.shelf ==="currentlyReading")} title={'currentlyReading'}/>
-                <ListContact books={this.state.books.filter((b)=>b.shelf ==="wantToRead")} title={'wantToRead'}/>
-                <ListContact books={this.state.books.filter((b)=>b.shelf ==="read")} title={'read'}/>
+                <ListContact
+                    books={this.state.books.filter((b)=>b.shelf ==="currentlyReading")}
+                    title={'currentlyReading'}
+                    updateShelf={this.updateShelf}
+                />
+                <ListContact
+                    books={this.state.books.filter((b)=>b.shelf ==="wantToRead")}
+                    title={'wantToRead'}
+                    updateShelf={this.updateShelf}
+                />
+                <ListContact
+                    books={this.state.books.filter((b)=>b.shelf ==="read")}
+                    title={'read'}
+                    updateShelf={this.updateShelf}
+                />
             </div>
         );
     }
