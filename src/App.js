@@ -84,29 +84,17 @@ class BooksApp extends Component{
     updateShelf = (book,shelf)=>{
         if(this.state.books){
             BooksAPI.update(book,shelf).then(()=>{
-                book['shelf'] = shelf;
+                book['shelf']= shelf;
                 this.setState((state)=>({
-                    books:state.books.filter((b)=>b.id !==book.id).concat(book)//book 是id， b
+                    books:state.books.filter((b)=>b.id !==book.id).concat(book)//
+                //    book 首先执行filter，刷新完state，然后在执行.concat
+
                 }))
             })
         }
 
 
-    }
-
-
-    // updateBooks = (book,shelf) => {
-    //     {console.log(book)}
-    //     if (this.state.books) {
-    //         BooksAPI.update(book,shelf).then(() => {
-    //             book['shelf'] = shelf;
-    //             this.setState(state => ({
-    //                 books: state.books.filter(b => b.id !== book.id).concat([ book ])
-    //             }))
-    //         })
-    //     }
-    // };
-
+    };
     render() {
         return (
             <div className="list-books">
