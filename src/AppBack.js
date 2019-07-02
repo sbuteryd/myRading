@@ -69,6 +69,7 @@ class BooksApp extends React.Component {
                           <div className="book-authors">Harper Lee</div>
                         </div>
                       </li>
+
                       <li>
                         <div className="book">
                           <div className="book-top">
