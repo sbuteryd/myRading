@@ -17,6 +17,7 @@ class Search extends Component{
 
 class ListContact extends Component{
     render() {
+        console.log(this.props.books)
         return (
             <div>
 
@@ -28,23 +29,28 @@ class ListContact extends Component{
 
 
 
-export default class BooksApp extends Component{
-
-    componentDidMount() {
-        BooksAPI.getAll().then(books =>{
-            console.log(books)
-        })
-        BooksAPI.search('react').then(contact=>{
-            console.log(contact)
-        })
+class BooksApp extends Component{
+    state = {
+        books:[]
     }
 
+    componentDidMount() {
+        BooksAPI.getAll().then((books)=>{
+            this.setState(({
+                books
+            }))
+        })
+    }
 
     render() {
         return (
             <div>
-                <h1>rusell</h1>
+                <ListContact books={this.state.books.filter((b)=>b.shelf ==="currentlyReading")}/>
+                <ListContact books={this.state.books.filter((b)=>b.shelf ==="wantToRead")}/>
+                <ListContact books={this.state.books.filter((b)=>b.shelf ==="read")}/>
             </div>
         );
     }
 }
+
+export default BooksApp;
