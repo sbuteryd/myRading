@@ -2,71 +2,9 @@ import React,{Component} from 'react'
 import * as BooksAPI from './BooksAPI'
 import {Route,Link} from 'react-router-dom'
 import './App.css'
-
-
-
-class Search extends Component{
-    render() {
-        return (
-            <div>
-
-            </div>
-        );
-    }
-}
-
-
-
-class ListContact extends Component{
-    changeShelf =(book,shelfValue)=>{
-        this.props.updateShelf(book,shelfValue)
-    };
-
-    render() {
-        const {books,title}= this.props
-        return (
-            <div className="bookshelf">
-                <h2 className="bookshelf-title">{title}</h2>
-                <div className="bookshelf-books">
-                    <ol className='books-grid'>
-                        {books.map((book)=>(
-                            <li key={book.id}>
-                                <div className="book">
-                                    <div className="book-top">
-                                        <div className="book-cover" style={{ width: 128, height: 193,backgroundImage:`url(${book.imageLinks.smallThumbnail ? book.imageLinks.smallThumbnail:'' })`}}></div>
-                                        <div className="book-shelf-changer">
-                                            <select value={book.shelf} onChange={(event)=> this.changeShelf(book,event.target.value)}>
-                                                <option value="move" disabled>Move to...</option>
-                                                <option value="currentlyReading">Currently Reading</option>
-                                                <option value="wantToRead">Want to Read</option>
-                                                <option value="read">Read</option>
-                                                <option value="none">None</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="book-title">{book.title}</div>
-                                    <div className="book-authors">{book.authors}</div>
-                                </div>
-                            </li>
-                        ))}
-
-                    </ol>
-                </div>
-            </div>
-        );
-    }
-}
-
-
-class Header  extends Component {
-    render() {
-        return (
-            <div className="list-books-title">
-                <h1>MyReads</h1>
-            </div>
-        );
-    }
-}
+import ListContact from './ListContact'
+import Header from './Header'
+import Search from './Search'
 
 
 class BooksApp extends Component{
@@ -84,37 +22,61 @@ class BooksApp extends Component{
     updateShelf = (book,shelf)=>{
         if(this.state.books){
             BooksAPI.update(book,shelf).then(()=>{
+                //这个 update 直接更新服务器了，但是要刷新网页
                 book['shelf']= shelf;
                 this.setState((state)=>({
-                    books:state.books.filter((b)=>b.id !==book.id).concat(book)//
-                //    book 首先执行filter，刷新完state，然后在执行.concat
+                    books:state.books.filter((b)=>b.id !==book.id).concat(book)
+
+                    //使用 setState动态更新ui
+                    //    book 首先执行filter，刷新完state，然后在执行.concat
 
                 }))
             })
+
         }
 
 
     };
     render() {
         return (
-            <div className="list-books">
-                <Header/>
-                <ListContact
-                    books={this.state.books.filter((b)=>b.shelf ==="currentlyReading")}
-                    title={'currentlyReading'}
-                    updateShelf={this.updateShelf}
-                />
-                <ListContact
-                    books={this.state.books.filter((b)=>b.shelf ==="wantToRead")}
-                    title={'wantToRead'}
-                    updateShelf={this.updateShelf}
-                />
-                <ListContact
-                    books={this.state.books.filter((b)=>b.shelf ==="read")}
-                    title={'read'}
-                    updateShelf={this.updateShelf}
-                />
+            <div className="app">
+                <div className="list-books">
+                    <Route exact path='/' render={()=>(
+                        <div>
+                            <Header/>
+                            <ListContact
+                                books={this.state.books.filter((b)=>b.shelf ==="currentlyReading")}
+                                title={'currentlyReading'}
+                                updateShelf={this.updateShelf}
+                            />
+                            <ListContact
+                                books={this.state.books.filter((b)=>b.shelf ==="wantToRead")}
+                                title={'wantToRead'}
+                                updateShelf={this.updateShelf}
+                            />
+                            <ListContact
+                                books={this.state.books.filter((b)=>b.shelf ==="read")}
+                                title={'read'}
+                                updateShelf={this.updateShelf}
+                            />
+                            <div className="open-search">
+                                <Link to='/search'>
+                                    <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+                                </Link>
+                            </div>
+
+                        </div>
+                    )}/>
+                    <Route  path='/search' render={()=>(
+                        <div>
+                            <Search
+                                updateShelf={this.updateShelf}
+                                books={this.state.books}/>
+                        </div>
+                    )}/>
+                </div>
             </div>
+
         );
     }
 }
